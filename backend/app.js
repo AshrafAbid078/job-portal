@@ -28,8 +28,7 @@ app.set("trust proxy", 1);
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://job-portal-f9cq.onrender.com",
-    "https://job-portal.vercel.app"
+    "https://job-portal-one-phi-56.vercel.app"
   ],
   credentials: true
 }));

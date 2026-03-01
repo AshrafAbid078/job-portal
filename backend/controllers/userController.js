@@ -15,9 +15,11 @@ export const register = async (req, res) => {
     }
     const normalizedEmail = email.toLowerCase().trim();
     const existingUser = await User.findOne({ email: normalizedEmail });
-    const file = req.file;
-    const fileUri = getDataUri(file);
-    const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+     if (req.file) {
+      const fileUri = getDataUri(req.file);
+      const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+      profilePicture = cloudResponse.secure_url;
+    }
     if (existingUser) {
       return res.status(400).json({
         success: false,
@@ -39,6 +41,7 @@ export const register = async (req, res) => {
       success: true,
     });
   } catch (error) {
+    console.log("REGISTER ERROR:", error);
     return res.status(500).json({
       message: "Something went wrong!",
       success: false,
@@ -107,7 +110,8 @@ export const logout = async (req, res) => {
   try {
     res.clearCookie("token", {
       httpOnly: true,
-      sameSite: "strict",
+      secure: true,
+      sameSite: "None",
     });
 
     return res.status(200).json({

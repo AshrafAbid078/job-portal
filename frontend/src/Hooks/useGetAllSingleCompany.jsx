@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { COMPANY_API_END_POINT } from '../Utils/constant';
-import { setSingleCompany } from '../redux/CompanySlice';
+import { setSingleCompany } from '../redux/companySlice';
 
 const useGetCompanyById = (companyId) => {
     const dispatch = useDispatch();

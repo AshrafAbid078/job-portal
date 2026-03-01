@@ -26,7 +26,11 @@ app.use(cookieParser());
 app.set("trust proxy", 1);
 
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: [
+    "http://localhost:5173",
+    "https://job-portal-f9cq.onrender.com",
+    "https://job-portal.vercel.app"
+  ],
   credentials: true
 }));
 

@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import JobCard from "../components/JobCard";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchedQuery } from "../redux/JobSlice";
-import useGetAllJobs from "../hooks/useGetAllJobs";
+import useGetAllJobs from "../Hooks/useGetAllJobs";
 import {motion} from "framer-motion";
 
 const Browse = () => {

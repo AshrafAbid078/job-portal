@@ -26,9 +26,9 @@ app.use(cookieParser());
 
 app.use(cors({
   origin: [
-  "http://localhost:5173",
-  "https://your-frontend.vercel.app"
-],
+    "http://localhost:5173",
+    "https://job-portal-self-nu.vercel.app"
+  ],
   credentials: true
 }));
 

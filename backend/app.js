@@ -25,7 +25,10 @@ app.use(urlencoded({ extended: true, limit: "10mb" }));
 app.use(cookieParser());
 
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: [
+  "http://localhost:5173",
+  "https://your-frontend.vercel.app"
+],
   credentials: true
 }));
 
@@ -35,13 +38,24 @@ connect(process.env.MONGODB_URI)
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  limit: 100,
+  limit: 200,
+});
+app.get("/", (req, res) => {
+  res.send("Job Portal API running...");
 });
 
 app.use("/api/v1/users", limiter, UserRouter);
 app.use("/api/v1/companies", limiter, CompanyRouter);
 app.use("/api/v1/jobs", limiter, JobRouter);
 app.use("/api/v1/applications", limiter,applicationRouter);
+
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({
+    success: false,
+    message: "Internal Server Error"
+  });
+});
 
 
 export default app;

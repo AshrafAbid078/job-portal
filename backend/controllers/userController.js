@@ -87,7 +87,8 @@ export const login = async (req, res) => {
       .cookie("token", token, {
         maxAge: 2 * 24 * 60 * 60 * 1000,
         httpOnly: true,
-        sameSite: "strict",
+        secure: true,
+        sameSite: "none",
       })
       .json({
         message: "user logged in successfully",
@@ -124,7 +125,7 @@ export const logout = async (req, res) => {
 export const updateProfile = async (req, res) => {
   try {
     const { fullName, email, bio, skills, password, designation } = req.body;
-    
+
     const userId = req.user.id;
 
     const user = await User.findById(userId);
@@ -139,7 +140,7 @@ export const updateProfile = async (req, res) => {
       const fileUri = getDataUri(req.file);
 
       const upload = await cloudinary.uploader.upload(fileUri.content, {
-        resource_type: "raw", 
+        resource_type: "raw",
         folder: "resumes",
       });
 
@@ -169,7 +170,7 @@ export const updateProfile = async (req, res) => {
     }
 
     await user.save();
-    
+
     return res.status(200).json({
       message: "Profile updated successfully",
       user,

@@ -8,7 +8,7 @@ import Browse from "./pages/Browse";
 import Profile from "./pages/Profile";
 import MainLayout from "../MainLayout";
 import Jobdetails from "./pages/Jobdetails";
-import Companies from "./admin/companies";
+import Companies from "./admin/Companies";
 import AdminJobs from "./admin/AdminJobs";
 import CreateCompany from "./admin/CreateCompany";
 import CompanyDetails from "./admin/CompanyDetails";

@@ -6,27 +6,36 @@ import { motion } from "framer-motion";
 
 const Jobs = () => {
   const { allJobs, searchedQuery } = useSelector((store) => store.job);
-  const [filterJobs, setFilterJobs] = useState(allJobs);
+
+  const [filterJobs, setFilterJobs] = useState([]);
   const [showFilter, setShowFilter] = useState(false);
 
   useEffect(() => {
+
     if (!searchedQuery) {
       setFilterJobs(allJobs);
       return;
     }
 
-    const query = searchedQuery.toLowerCase();
+    const { jobType, location, experience } = searchedQuery;
 
-    const filtered = allJobs.filter((job) => (
-      job.title?.toLowerCase().includes(query) ||
-      job.description?.toLowerCase().includes(query) ||
-      job.location?.toLowerCase().includes(query) ||
-      job.jobType?.toLowerCase().includes(query) ||
-      String(job.experience)?.includes(query) ||
-      String(job.salary)?.includes(query)
-    ));
+    const filtered = allJobs.filter((job) => {
+
+      const jobTypeMatch =
+        !jobType || job?.jobType?.toLowerCase() === jobType.toLowerCase();
+
+      const locationMatch =
+        !location || job?.location?.toLowerCase() === location.toLowerCase();
+
+      const experienceMatch =
+        !experience || job?.experience <= Number(experience);
+
+      return jobTypeMatch && locationMatch && experienceMatch;
+
+    });
 
     setFilterJobs(filtered);
+
   }, [allJobs, searchedQuery]);
 
   return (
@@ -55,13 +64,17 @@ const Jobs = () => {
 
         {/* Jobs */}
         <div className="flex-1">
+
           {filterJobs.length === 0 ? (
             <p className="text-center text-gray-500 mt-10">
               No jobs available
             </p>
           ) : (
+
             <div className="pb-10">
+
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
                 {filterJobs.map((job) => (
                   <motion.div
                     key={job._id}
@@ -73,11 +86,17 @@ const Jobs = () => {
                     <JobCard job={job} />
                   </motion.div>
                 ))}
+
               </div>
+
             </div>
+
           )}
+
         </div>
+
       </div>
+
     </div>
   );
 };
